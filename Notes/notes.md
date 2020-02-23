@@ -386,3 +386,101 @@ emtr.on(eventConfig.GREET, function() {
 So now instead of always passing the actual string 'greet' everytime, we can access and pass the string like this.
 
 ### Object.create() and Prototypes
+
+There are several ways to setup the _prototype_ and the _prototype chain_
+
+- Constructors
+- Classes (ES6)
+- _object.create()_
+
+```js
+var person = {
+  firstname: '',
+  lastname:",
+  greet: function() {
+    return this.firstname + ' ' + this.lastname;
+  }
+}
+
+var anthony = Object.create(person);
+```
+
+Creating Objects in this way, you can write a normal object literal and when you use _Object.create()_ you are creating a new _empty object_ and setting its prototype, to the Object you passed into the _create()_ method.
+
+You can overwrite the prototype, by setting properties and methods of the same name, directly to the prototype.
+
+```js
+anthony.firstname = 'Anthony';
+anthony.lastname = 'Eriksen';
+```
+
+You can do this to create multiple objects that all point to _person_ as their prototype.
+
+```js
+var person = {
+  firstname: '',
+  lastname: '',
+  greet: function() {
+    return this.firstname + ' ' + this.lastname;
+  }
+};
+
+var anthony = Object.create(person);
+anthony.firstname = 'Anthony';
+anthony.lastname = 'Eriksen';
+console.log(anthony);
+
+var vincent = Object.create(person);
+vincent.firstname = 'Vincent';
+vincent.lastname = 'Eriksen';
+console.log(vincent.greet()); // Vincent Eriksen
+console.log(anthony.greet()); // Anthony Eriksen
+```
+
+Both the "vincent" and "anthony" objects have access to the _greet()_ method. In this case, they also have access to the same properties.
+
+This a fast, clear, and simple way, to set the prototype, and the prototype chain.
+
+### Inheriting from the Event Emitter
+
+The _prototype chain is inheritance_
+
+- _Function Constructors_ - .prototype property of that function is what all objects created from that function constructor point to as _their_ prototype.
+
+- _Classes (ES6)_ - Extends
+
+- _Object.create()_ - Pass an object literal into the create() method to point to for all the Objects created by Object_create() as their prototype.
+
+```js
+var EventEmitter = require('events');
+var util = require('util');
+
+function Greetr() {
+  this.greeting = 'Hello World'; // Constructor Function
+}
+
+util.inherits(Greetr, EventEmitter); // Inherit from the Event Emitters prototype. Any Objects created with the Constructor Function gets access to these properties and methods via the prototype chain.
+
+Greetr.prototype.greet = function() {
+  // Add own custom method to Greetr objects prototype
+  console.log(this.greeting);
+  this.emit('greet');
+};
+
+var greeter1 = new Greetr(); // Creates a new Object from the Greetr Constructor Function
+
+greeter1.on('greet', function() {
+  // Uses the "on" method from the Event Emitter that we inherited through the prototype chain.
+  console.log('Someone greeted!');
+});
+
+greeter1.greet(); // Calls the 'greet' event functioncreated in the "on" method.
+```
+
+### Node, ES6, and Template Strings
+
+**Template Literal**
+
+- A way to concatenate strings in JavaScript.
+
+### call() and apply()

@@ -1,14 +1,10 @@
-var Emitter = require('events');
+var obj = {
+  name: 'John Doe',
+  greet: function() {
+    console.log(`Hello ${this.name}`);
+  }
+};
 
-var emtr = new Emitter();
-
-emtr.on('greet', function() {
-  console.log('Somewhere, someone said hello.');
-});
-
-emtr.on('greet', function() {
-  console.log('A greeting occurred!');
-});
-
-console.log('Hello!');
-emtr.emit('greet');
+obj.greet();
+obj.greet.call({ name: 'Jane Doe' });
+obj.greet.apply({ name: 'Jane Doe' });
