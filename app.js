@@ -1,10 +1,11 @@
-var obj = {
-  name: 'John Doe',
-  greet: function() {
-    console.log(`Hello ${this.name}`);
-  }
-};
+'use strict';
 
-obj.greet();
-obj.greet.call({ name: 'Jane Doe' });
-obj.greet.apply({ name: 'Jane Doe' });
+var Greetr = require('./greetr');
+
+var greeter1 = new Greetr();
+
+greeter1.on('greet', function(data) {
+  console.log(`Someone greeted!: ${data}`);
+});
+
+greeter1.greet('Anthony');

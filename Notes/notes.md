@@ -484,3 +484,47 @@ greeter1.greet(); // Calls the 'greet' event functioncreated in the "on" method.
 - A way to concatenate strings in JavaScript.
 
 ### call() and apply()
+
+Call and Apply do essentially the same thing, invoke a function assigning the "this" keyword to another context, and pass in parameters.
+
+Call, takes parameters _comma seperated_
+Whereas Apply, takes parameters inside of an array
+
+.call(obj, param1, param1)
+.apply(obj, [param1, param2]);
+
+.bind just binds the "this" keyword to a specific context.
+
+### Inheriting from the Event Emitter
+
+### ES6 Classes
+
+```js
+'use strict';
+
+class Person {
+  constructor(firstname, lastname) {
+    this.firstname = firstname;
+    this.lastname = lastname;
+  }
+
+  // Stored on the Prototype
+  greet() {
+    console.log('Hello, ' + this.firstname + ' ' + this.lastname);
+  }
+}
+
+var anthony = new Person('Anthony', 'Eriksen');
+anthony.greet();
+
+var debra = new Person('Debra', 'Thompson');
+debra.greet();
+
+console.log(anthony.__proto__);
+console.log(debra.__proto__);
+console.log(anthony.__proto__ === debra.__proto__);
+```
+
+### Inheriting from the Event Emitter part 3
+
+### JavaScript is Synchronous
